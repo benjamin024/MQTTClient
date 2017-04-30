@@ -29,9 +29,8 @@ public class MQTTClient {
         Topic[] topics = {new Topic(utf8(topic), QoS.AT_LEAST_ONCE)};
         try{
             connection.subscribe(topics);
-            SubscribeT subscribe = new SubscribeT(connection);
-            subscribe.start();
-            subscribed = subscribe;
+            subscribed = new SubscribeT(connection);
+            subscribed.start();
         }catch(Exception e){
             System.out.println(e.toString());
         }
@@ -45,13 +44,15 @@ public class MQTTClient {
         }
     }
     
-    public void unsuscribe(){
+    public void unsubscribe(){
         subscribed.stopThread();
+        subscribed.hilo.stop();
     }
 
     public void disconnect(){
         try {
             subscribed.stopThread();
+            subscribed.hilo.stop();
             connection.disconnect();
         } catch (Exception e) {
             System.out.println(e.toString());

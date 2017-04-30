@@ -6,7 +6,7 @@ import org.fusesource.mqtt.client.Message;
 public class SubscribeT implements Runnable{
     
     private BlockingConnection connection;
-    private Thread hilo;
+    public Thread hilo;
     private boolean stop = false;
     
     public SubscribeT(BlockingConnection c){
@@ -15,6 +15,7 @@ public class SubscribeT implements Runnable{
     
     public void stopThread(){
         stop = true;
+        System.out.println("Subscribe Thread Finished");
     }
     
     public void start() {
